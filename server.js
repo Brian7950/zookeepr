@@ -43,8 +43,13 @@ function filterByQuery(query, animalsArray) {
     return filteredResults;
   }
 
+  function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+  }
+
 //get method req. 2 arguments  1st str describes route client will have to fetch from
-//second callback function taht will execute everytime route is accessed with a GET request
+//second callback function that will execute everytime route is accessed with a GET request
 app.get('/api/animals', (req, res) => {
     //first parameter is request
     //using send method from res Parameter to send strings like hello! to client / res Obj has a lot more methods then send
@@ -55,6 +60,16 @@ app.get('/api/animals', (req, res) => {
     }
     res.json(results)
 });
+
+app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  if (result) {
+    res.json(result);
+  } else {
+    res.send(404);
+  }
+});
+
 
 app.listen(PORT, () => {
     console.log(`API Server now on port ${PORT}!`)
