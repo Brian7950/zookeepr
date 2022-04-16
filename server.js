@@ -7,6 +7,8 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 
+app.use(express.static('public'));
+
 //parse incoming string to array data
 //the extended:true on the method tells server there may be sub-array data nested in it as well. 
 app.use(express.urlencoded({ extended: true }));
@@ -128,6 +130,10 @@ app.post('/api/animals', (req, res) => {
     const animal = createNewAnimal(req.body, animals);
     res.json(animal);
   }
+});
+
+app.get('/',(req,res) =>{
+  res.sendFile(path.join(__dirname,'./public/index.html'));
 });
 
 
